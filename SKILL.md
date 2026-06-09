@@ -83,7 +83,7 @@ wsl uv run --with pillow --with pydantic scripts/package_pet.py /mnt/c/path/to/p
 The launcher scans:
 
 - Windows `%USERPROFILE%\.codex\pets\<pet-id>\`
-- Tauri app data `pets/`
+- Tauri app data `%APPDATA%\top.nether.pet\pets\`
 - Custom folders saved in launcher settings as `petFolders`
 
 For Codex-compatible sharing, stage finished packages under `~/.codex/pets/<pet-id>/`. For app-local installs, copy the package into the launcher's app data `pets/` directory. For user-managed libraries, install into any folder and add that folder in the launcher settings page.

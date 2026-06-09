@@ -1,5 +1,7 @@
 # Launcher Contract
 
+Application identifier: `top.nether.pet`.
+
 The Tauri launcher has two windows:
 
 - `pet`: transparent, borderless, always on top, skipped from taskbar, draggable when unlocked.
@@ -61,7 +63,7 @@ When the manual state is `idle`, the launcher may occasionally preview other qui
 Scan:
 
 - `%USERPROFILE%\.codex\pets\<pet-id>\`
-- Tauri app data `pets/<pet-id>/`
+- Tauri app data `%APPDATA%\top.nether.pet\pets\<pet-id>\`
 - User-configured custom directories from `settings.json` `petFolders`
 
 Custom directories may point either to a folder containing multiple pet package subfolders or directly to one pet package folder containing `pet.json`.
