@@ -97,7 +97,7 @@ desktop-pet/
 
 ## 脚本运行要求
 
-Python 辅助脚本固定使用 WSL `uv`：
+Windows上，Python 辅助脚本固定使用 WSL `uv`：
 
 ```bash
 wsl uv run --with pillow --with pydantic scripts/validate_pet_package.py <pet-dir>
