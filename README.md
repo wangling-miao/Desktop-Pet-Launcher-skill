@@ -2,12 +2,6 @@
 
 `desktop-pet` 是给 Codex 使用的桌宠制作与校验 skill，目标是为 **Desktop Pet Launcher** 生成、修复、验证、导入和打包高清宠物包。
 
-作者 Git 身份：
-
-```text
-亡灵 <202405721336@smail.xtu.edu.cn>
-```
-
 ## 适用场景
 
 当用户要求以下任务时使用本 skill：
