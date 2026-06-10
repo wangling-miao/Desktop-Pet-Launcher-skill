@@ -7,6 +7,8 @@ description: Create, validate, repair, import, and package high-resolution Tauri
 
 Use this skill to create, repair, validate, import, and package pets for the Tauri Desktop Pet Launcher. The launcher is compatible with old `hatch-pet` packages, but this skill should produce high-resolution launcher-native packages by default.
 
+For character pets, first prove the pet works as a complete 1x action set before producing high-DPI assets. A complete 1x action set means all 9 rows are authored with distinct state semantics, validated as a `1536x1872` atlas, and visually QA'd through a contact sheet or GIF previews. Do not replace this step with a single base sprite plus local transforms.
+
 ## Core Contract
 
 Read these references only when they apply:
@@ -33,6 +35,14 @@ The package can be installed into any folder the launcher scans. The default Cod
 ## High-Resolution Rule
 
 Do not treat a `192x208` cell or `1536x1872` atlas as a source-quality master. If only a 1x hatch-pet atlas exists, it is legacy-compatible but not high-resolution.
+
+For new character or mascot generation:
+
+- Build and accept a full 1x hatch-pet package first when action quality, identity fidelity, or state semantics matter.
+- Generate each normal row as its own state-specific strip grounded by the canonical base; only `running-left` may be derived from `running-right`, and only through framewise mirror preserving order.
+- Never synthesize `waving`, `jumping`, `failed`, `waiting`, `running`, or `review` by affine-transforming one base pose, moving a static sprite, or recoloring another state.
+- Capture user-specified identity details, such as special eye shapes, markings, props, or asymmetries, in the base prompt and every row prompt. Treat missing or wrong identity details as visual QA failures even when deterministic validation passes.
+- After the 1x action set passes, either install it as a legacy-compatible package or use it as the approved action storyboard for a true 4x redraw. Do not upscale the accepted 1x atlas to claim high-DPI support.
 
 For new visual generation:
 
@@ -72,6 +82,18 @@ wsl uv run --with pillow --with pydantic scripts/package_pet.py /mnt/c/path/to/p
 ```
 
 The packager creates or refreshes `spritesheet@2x.webp`, `spritesheet.webp`, and manifest scale fields from `spritesheet@4x.webp`.
+
+For accepted 1x-only hatch-pet output, install the legacy-compatible package directly:
+
+```text
+<pet-id>/
+  pet.json
+  spritesheet.webp
+```
+
+The manifest should keep `spritesheetPath` as `spritesheet.webp`. Do not add `spritesheets` scale fields unless the corresponding files actually exist.
+
+Variants are allowed after one action set passes QA. Keep variants derived from the accepted atlas to conservative palette, contrast, scale, or naming changes unless the user requests a new visual identity. Re-validate every variant.
 
 To copy the finished package into a launcher scan root, pass `--install-root`:
 
@@ -113,9 +135,10 @@ The launcher imports gallery pets from zip download URLs and installs them into 
 
 After deterministic validation, inspect:
 
+- The 1x contact sheet and GIF previews for complete, distinct row semantics.
 - 4x atlas for crisp source details.
 - 1x atlas for readable small-size animation.
 - All 9 animation rows for identity consistency and correct state semantics.
 - Scaling in the launcher at small, native, and enlarged window sizes.
 
-Reject packages with identity drift, cropped frames, blank used cells, copied guide marks, detached effects, or a 4x atlas that is merely an upscaled 1x image.
+Reject packages with identity drift, cropped frames, blank used cells, copied guide marks, detached effects, inert rows, repeated base-pose rows, missing user-specified details, or a 4x atlas that is merely an upscaled 1x image.
