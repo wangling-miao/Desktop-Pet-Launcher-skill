@@ -11,6 +11,7 @@
 - 将旧 `hatch-pet` 包升级或包装为 launcher 兼容格式。
 - 生成高清 4x master，并导出 2x/1x 运行和兼容资源。
 - 把宠物包安装到 `~/.codex/pets` 或 launcher 自定义宠物目录。
+- 准备投稿到 `awesome-desktop-pets` 桌宠图鉴的包和 PR。
 
 ## 与 hatch-pet 的关系
 
@@ -46,6 +47,7 @@ desktop-pet/
 ├─ agents/openai.yaml
 ├─ references/
 │  ├─ hatch-pet-workflow.md
+│  ├─ gallery-contract.md
 │  ├─ launcher-contract.md
 │  └─ pet-package-contract.md
 └─ scripts/
@@ -156,6 +158,35 @@ wsl uv run --with pillow --with pydantic scripts/package_pet.py /mnt/c/path/to/m
 5. 运行 `validate_pet_package.py`。
 6. 进行视觉 QA：同时检查 4x 清晰度和 1x 可读性。
 7. 安装到 `~/.codex/pets` 或用户在 launcher 设置页添加的自定义目录。
+
+## 图鉴投稿工作流
+
+当用户要把桌宠发布到社区图鉴时，目标仓库是：
+
+```text
+https://github.com/wangling-miao/awesome-desktop-pets
+```
+
+投稿包放在：
+
+```text
+pets/<pet-id>/
+```
+
+必须包含：
+
+- `pet.json`
+- `preview.png`
+- `preview.gif`
+- `README.md`
+- `LICENSE`
+- `spritesheet.webp`，以及可选高清 `spritesheet@2x.webp` / `spritesheet@4x.webp`
+
+图鉴版 `pet.json` 在 launcher 兼容字段之外，还应包含 `name`、`version`、`author`、`tags`、`license`、`preview`、`format`、`resolution`、`createdAt`。提交前在图鉴仓库运行：
+
+```bash
+npm run build
+```
 
 ## 关键拒绝条件
 

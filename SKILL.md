@@ -14,6 +14,7 @@ Read these references only when they apply:
 - `references/pet-package-contract.md`: required for every package creation, repair, validation, or import.
 - `references/launcher-contract.md`: read when launcher behavior, settings, tray behavior, import paths, or custom pet folders matter.
 - `references/hatch-pet-workflow.md`: read when generating, repairing, or visually QA'ing pet art. It carries the essential `hatch-pet` workflow without loading the entire upstream skill into every task.
+- `references/gallery-contract.md`: read when publishing or preparing a package for the `awesome-desktop-pets` community gallery.
 
 Package root:
 
@@ -87,6 +88,26 @@ The launcher scans:
 - Custom folders saved in launcher settings as `petFolders`
 
 For Codex-compatible sharing, stage finished packages under `~/.codex/pets/<pet-id>/`. For app-local installs, copy the package into the launcher's app data `pets/` directory. For user-managed libraries, install into any folder and add that folder in the launcher settings page.
+
+## Community Gallery Guidance
+
+When the user asks to publish, submit, share, or add a pet to the community/gallery, use the `awesome-desktop-pets` index repository instead of inventing a backend. Read `references/gallery-contract.md`.
+
+Gallery-ready packages must add:
+
+- `preview.png`
+- `preview.gif`
+- `README.md`
+- `LICENSE`
+- gallery metadata fields in `pet.json`: `name`, `version`, `author`, `tags`, `license`, `preview`, `format`, `resolution`, and `createdAt`
+
+The gallery repository validates and builds with:
+
+```bash
+npm run build
+```
+
+The launcher imports gallery pets from zip download URLs and installs them into `%APPDATA%\top.nether.pet\pets\<pet-id>\`.
 
 ## Visual QA
 
